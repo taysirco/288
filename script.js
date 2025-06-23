@@ -431,6 +431,18 @@ document.addEventListener('DOMContentLoaded', function() {
     // تهيئة نظام إشعارات الثقة الاجتماعية
     socialProofSystem = new SocialProofNotifications();
     
+    // TikTok ViewContent Tracking
+    if (typeof ttq !== 'undefined') {
+        ttq.track('ViewContent', {
+            content_type: 'product',
+            content_id: 'police-288-3in1',
+            content_name: 'منتج الصاعق والكشاف والليزر 3 في 1',
+            value: '1700',
+            currency: 'EGP'
+        });
+        console.log('✅ TikTok ViewContent tracked');
+    }
+    
     startMainAutoPlay();
 });
 
@@ -582,6 +594,23 @@ async function sendToMakeWebhook(formData, retryCount = 0) {
 function handleFormSubmission(e) {
     e.preventDefault();
     
+    // TikTok AddToCart Tracking
+    if (typeof ttq !== 'undefined') {
+        const quantity = document.getElementById('quantity').value;
+        const productName = 'منتج الصاعق والكشاف والليزر 3 في 1';
+        let price = quantity === '1' ? '1700' : '2999';
+        
+        ttq.track('AddToCart', {
+            value: price,
+            currency: 'EGP',
+            content_type: 'product',
+            content_id: 'police-288-3in1',
+            content_name: productName,
+            quantity: parseInt(quantity)
+        });
+        console.log('✅ TikTok AddToCart tracked');
+    }
+    
     if (!validateForm()) {
         return;
     }
@@ -627,6 +656,19 @@ function handleFormSubmission(e) {
             hideLoading();
             
             if (result.success) {
+                // TikTok Conversion Tracking
+                if (typeof ttq !== 'undefined') {
+                    ttq.track('CompletePayment', {
+                        value: formData.price.replace(/[^\d]/g, ''),
+                        currency: 'EGP',
+                        content_type: 'product',
+                        content_id: 'police-288-3in1',
+                        content_name: formData.product,
+                        quantity: parseInt(formData.quantity)
+                    });
+                    console.log('✅ TikTok conversion tracked');
+                }
+                
                 showSuccessMessage(formData);
                 resetForm();
                 

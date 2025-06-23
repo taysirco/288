@@ -627,7 +627,7 @@ function handleFormSubmission(e) {
             hideLoading();
             
             if (result.success) {
-                showSuccessMessage();
+                showSuccessMessage(formData);
                 resetForm();
                 
                 // إيقاف الإشعارات بعد الطلب الناجح
@@ -754,42 +754,10 @@ function hideLoading() {
     }
 }
 
-function showSuccessMessage() {
-    const successDiv = document.createElement('div');
-    successDiv.innerHTML = `
-        <div style="
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
-            color: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-            z-index: 10000;
-            text-align: center;
-            min-width: 320px;
-            max-width: 90%;
-        ">
-            <div style="font-size: 3rem; margin-bottom: 15px;">🎉</div>
-            <h3 style="margin-bottom: 10px; font-size: 1.4rem;">تم تأكيد طلبك بنجاح!</h3>
-            <p style="margin-bottom: 15px; line-height: 1.6;">
-                تم إرسال بياناتك إلى فريق المبيعات<br>
-                سيتم التواصل معك خلال 15 دقيقة
-            </p>
-            <div style="font-size: 0.9rem; color: rgba(255,255,255,0.9);">
-                🚚 سيصلك المنتج خلال 24-48 ساعة<br>
-                💳 الدفع عند الاستلام
-            </div>
-        </div>
-    `;
-    
-    document.body.appendChild(successDiv);
-    
-    setTimeout(() => {
-        successDiv.remove();
-    }, 5000);
+function showSuccessMessage(orderData) {
+    // بدلاً من عرض رسالة، توجيه المستخدم إلى صفحة التأكيد
+    const params = new URLSearchParams(orderData);
+    window.location.href = `confirmation.html?${params.toString()}`;
 }
 
 function showErrorMessage(errorText) {

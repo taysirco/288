@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تأكيد الطلب - كشاف ليزر Police 288</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .confirmation-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            overflow: hidden;
+            margin-top: 20px;
+        }
+        
+        .header-section {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="40" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="80" r="1.5" fill="rgba(255,255,255,0.1)"/></svg>');
+        }
+        
+        .success-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .header-section h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .header-section p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .order-id {
+            background: rgba(255,255,255,0.2);
+            padding: 10px 20px;
+            border-radius: 25px;
+            display: inline-block;
+            margin-top: 15px;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .content-section {
+            padding: 40px 30px;
+        }
+        
+        .order-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .customer-info, .product-info {
+            background: #f8fafc;
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .info-item:last-child {
+            border-bottom: none;
+        }
+        
+        .info-label {
+            font-weight: 600;
+            color: #4a5568;
+        }
+        
+        .info-value {
+            color: #2d3748;
+            font-weight: 500;
+        }
+        
+        .product-image {
+            width: 100%;
+            max-width: 200px;
+            margin: 20px auto;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        
+        .invoice-section {
+            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+            border: 2px solid #e2e8f0;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+        
+        .invoice-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 20px;
+            text-align: center;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        .invoice-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 1.1rem;
+        }
+        
+        .invoice-item:last-child {
+            border-bottom: none;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #2d3748;
+            border-top: 2px solid #667eea;
+            padding-top: 15px;
+            margin-top: 10px;
+        }
+        
+        .shipping-info {
+            background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .shipping-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+        
+        .shipping-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .shipping-item {
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .contact-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .contact-section h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+        }
+        
+        .contact-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .contact-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 12px 25px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .contact-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+        
+        .back-btn {
+            background: #4a5568;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 20px auto;
+            display: block;
+            text-decoration: none;
+            text-align: center;
+        }
+        
+        .back-btn:hover {
+            background: #2d3748;
+            transform: translateY(-2px);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .confirmation-card {
+                margin-top: 10px;
+            }
+            
+            .header-section {
+                padding: 30px 20px;
+            }
+            
+            .header-section h1 {
+                font-size: 1.6rem;
+            }
+            
+            .content-section {
+                padding: 25px 20px;
+            }
+            
+            .order-details {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .customer-info, .product-info {
+                padding: 20px;
+            }
+            
+            .invoice-section {
+                padding: 20px;
+            }
+            
+            .shipping-details {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .contact-btn {
+                width: 100%;
+                max-width: 250px;
+                justify-content: center;
+            }
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .confirmation-card {
+            animation: fadeIn 0.8s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="confirmation-card">
+            <!-- Header Section -->
+            <div class="header-section">
+                <div class="success-icon">🎉</div>
+                <h1>تم تأكيد طلبك بنجاح!</h1>
+                <p>شكراً لك لاختيار كشاف ليزر Police 288</p>
+                <div class="order-id" id="orderNumber">رقم الطلب: #288-2025-<span id="orderIdNumber">0000</span></div>
+            </div>
+
+            <!-- Content Section -->
+            <div class="content-section">
+                <!-- Order Details -->
+                <div class="order-details">
+                    <!-- Customer Info -->
+                    <div class="customer-info">
+                        <h3 class="section-title">
+                            👤 بيانات العميل
+                        </h3>
+                        <div class="info-item">
+                            <span class="info-label">الاسم:</span>
+                            <span class="info-value" id="customerName">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">رقم الهاتف:</span>
+                            <span class="info-value" id="customerPhone">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">الواتساب:</span>
+                            <span class="info-value" id="customerWhatsapp">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">العنوان:</span>
+                            <span class="info-value" id="customerAddress">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">تاريخ الطلب:</span>
+                            <span class="info-value" id="orderDate">-</span>
+                        </div>
+                    </div>
+
+                    <!-- Product Info -->
+                    <div class="product-info">
+                        <h3 class="section-title">
+                            📦 تفاصيل المنتج
+                        </h3>
+                        <img src="public/images/288-flashlight-main-image.jpg" alt="كشاف ليزر Police 288" class="product-image">
+                        <div class="info-item">
+                            <span class="info-label">المنتج:</span>
+                            <span class="info-value">كشاف ليزر Police 288</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">الكمية:</span>
+                            <span class="info-value" id="productQuantity">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">العرض:</span>
+                            <span class="info-value" id="productOffer">-</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Invoice Section -->
+                <div class="invoice-section">
+                    <h3 class="invoice-title">🧾 فاتورة الطلب</h3>
+                    <div class="invoice-item">
+                        <span>سعر المنتج:</span>
+                        <span id="productPrice">-</span>
+                    </div>
+                    <div class="invoice-item">
+                        <span>رسوم الشحن:</span>
+                        <span>45 جنيه</span>
+                    </div>
+                    <div class="invoice-item">
+                        <span>المجموع الكلي:</span>
+                        <span id="totalPrice">-</span>
+                    </div>
+                </div>
+
+                <!-- Shipping Info -->
+                <div class="shipping-info">
+                    <h3>🚚 معلومات الشحن والتوصيل</h3>
+                    <p>سيتم توصيل طلبك خلال 24-48 ساعة إلى جميع محافظات مصر</p>
+                    <div class="shipping-details">
+                        <div class="shipping-item">
+                            <strong>💳 طريقة الدفع</strong><br>
+                            الدفع عند الاستلام
+                        </div>
+                        <div class="shipping-item">
+                            <strong>⏰ مدة التوصيل</strong><br>
+                            24-48 ساعة
+                        </div>
+                        <div class="shipping-item">
+                            <strong>📍 التغطية</strong><br>
+                            جميع محافظات مصر
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Section -->
+                <div class="contact-section">
+                    <h3>📞 هل تحتاج مساعدة؟</h3>
+                    <p>فريق خدمة العملاء متاح 24/7 لخدمتك</p>
+                    <div class="contact-buttons">
+                        <a href="tel:+201234567890" class="contact-btn">
+                            📱 اتصل بنا
+                        </a>
+                        <a href="https://wa.me/201234567890" class="contact-btn" target="_blank">
+                            💬 واتساب
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Back Button -->
+                <a href="index.html" class="back-btn">العودة إلى الموقع الرئيسي</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Get order data from URL parameters
+        function getOrderData() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const orderData = {};
+            
+            // Get all parameters
+            for (const [key, value] of urlParams.entries()) {
+                orderData[key] = decodeURIComponent(value);
+            }
+            
+            return orderData;
+        }
+
+        // Calculate total price including shipping
+        function calculateTotal(productPrice) {
+            const price = parseInt(productPrice.replace(/[^\d]/g, ''));
+            const shipping = 45;
+            return (price + shipping).toLocaleString('ar-EG') + ' جنيه';
+        }
+
+        // Generate order ID
+        function generateOrderId() {
+            const timestamp = Date.now();
+            const randomNum = Math.floor(Math.random() * 1000);
+            return timestamp.toString().slice(-4) + randomNum.toString().padStart(3, '0');
+        }
+
+        // Populate order details
+        function populateOrderDetails() {
+            const orderData = getOrderData();
+            
+            // Generate and display order ID
+            const orderId = generateOrderId();
+            document.getElementById('orderIdNumber').textContent = orderId;
+            
+            // Populate customer info
+            document.getElementById('customerName').textContent = orderData.name || '-';
+            document.getElementById('customerPhone').textContent = orderData.phone || '-';
+            document.getElementById('customerWhatsapp').textContent = orderData.whatsapp || 'غير محدد';
+            document.getElementById('customerAddress').textContent = orderData.address || '-';
+            document.getElementById('orderDate').textContent = orderData.timestamp || new Date().toLocaleString('ar-EG');
+            
+            // Populate product info
+            document.getElementById('productQuantity').textContent = orderData.quantity ? (orderData.quantity + ' قطعة') : '-';
+            document.getElementById('productOffer').textContent = orderData.offer || '-';
+            
+            // Populate pricing
+            const productPrice = orderData.price || '0 جنيه';
+            document.getElementById('productPrice').textContent = productPrice;
+            document.getElementById('totalPrice').textContent = calculateTotal(productPrice);
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            populateOrderDetails();
+            
+            // Add some animation delays
+            setTimeout(() => {
+                document.querySelector('.confirmation-card').style.transform = 'scale(1)';
+            }, 100);
+        });
+        
+        // Update contact links with actual data
+        function updateContactLinks() {
+            const orderData = getOrderData();
+            const message = encodeURIComponent(`مرحباً، أريد الاستفسار عن طلبي رقم #288-2025-${document.getElementById('orderIdNumber').textContent}`);
+            
+            // Update WhatsApp link
+            const whatsappLink = document.querySelector('a[href*="wa.me"]');
+            if (whatsappLink) {
+                whatsappLink.href = `https://wa.me/201234567890?text=${message}`;
+            }
+        }
+        
+        // Call update function after page loads
+        setTimeout(updateContactLinks, 1000);
+    </script>
+</body>
+</html> 

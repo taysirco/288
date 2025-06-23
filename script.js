@@ -427,6 +427,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeFloatingNav();
     initializeHeaderTransparency();
     setupNumberConversion();
+    initializeDemoVideo();
     
     // تهيئة نظام إشعارات الثقة الاجتماعية
     socialProofSystem = new SocialProofNotifications();
@@ -974,4 +975,68 @@ function initializeHeaderTransparency() {
         
         lastScrollTop = scrollTop;
     }, 10));
+}
+
+// Demo Video Functions
+function playDemoVideo() {
+    const video = document.getElementById('demoVideo');
+    const overlay = document.querySelector('.video-overlay');
+    
+    if (video && overlay) {
+        video.play();
+        overlay.classList.add('hidden');
+        
+        // TikTok Video Play Tracking
+        if (typeof ttq !== 'undefined') {
+            ttq.track('ViewContent', {
+                content_type: 'video',
+                content_id: 'police-288-demo-video',
+                content_name: 'فيديو توضيحي - منتج الصاعق والكشاف والليزر 3 في 1',
+                value: '1700',
+                currency: 'EGP',
+                video_title: 'شاهد المنتج أثناء العمل'
+            });
+            console.log('📹 TikTok Video Play Event Tracked');
+        }
+    }
+}
+
+// Video Event Listeners
+function initializeDemoVideo() {
+    const video = document.getElementById('demoVideo');
+    const overlay = document.querySelector('.video-overlay');
+    
+    if (video && overlay) {
+        // Show overlay when video ends
+        video.addEventListener('ended', () => {
+            overlay.classList.remove('hidden');
+        });
+        
+        // Hide overlay when video starts playing
+        video.addEventListener('play', () => {
+            overlay.classList.add('hidden');
+        });
+        
+        // Show overlay when video is paused
+        video.addEventListener('pause', () => {
+            if (!video.ended) {
+                setTimeout(() => {
+                    overlay.classList.remove('hidden');
+                }, 1000);
+            }
+        });
+        
+        // Track video completion
+        video.addEventListener('ended', () => {
+            if (typeof ttq !== 'undefined') {
+                ttq.track('CompleteRegistration', {
+                    content_name: 'مشاهدة كاملة للفيديو التوضيحي',
+                    content_category: 'video_completion',
+                    value: '1700',
+                    currency: 'EGP'
+                });
+                console.log('✅ TikTok Video Completion Tracked');
+            }
+        });
+    }
 } 

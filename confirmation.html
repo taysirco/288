@@ -4,6 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تأكيد الطلب - منتج الصاعق والكشاف والليزر 3 في 1</title>
+    
+    <!-- TikTok Pixel Code Start -->
+    <script>
+    !function (w, d, t) {
+      w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(
+    var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script")
+    ;n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
+
+      ttq.load('D1CPEFBC77UEHH7Q6CVG');
+      ttq.page();
+    }(window, document, 'ttq');
+    </script>
+    <!-- TikTok Pixel Code End -->
+    
+    <!-- Meta Tags for Social Sharing -->
+    <meta name="description" content="تم تأكيد طلبك بنجاح! شكراً لاختيارك منتج الصاعق والكشاف والليزر 3 في 1 - أقوى منتج حماية في مصر">
+    <meta name="keywords" content="تأكيد طلب, صاعق, كشاف, ليزر, حماية, دفاع, مصر, طلب ناجح">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="تم تأكيد طلبك بنجاح - منتج الصاعق والكشاف والليزر 3 في 1">
+    <meta property="og:description" content="تم تأكيد طلبك بنجاح! سيتم توصيل منتج الصاعق والكشاف والليزر 3 في 1 خلال 24-48 ساعة">
+    <meta property="og:image" content="public/images/288-flashlight-main-image.jpg">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://288-flashlight.vercel.app/confirmation.html">
+    
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="تم تأكيد طلبك بنجاح - منتج الصاعق والكشاف والليزر 3 في 1">
+    <meta name="twitter:description" content="تم تأكيد طلبك بنجاح! سيتم توصيل منتج الصاعق والكشاف والليزر 3 في 1 خلال 24-48 ساعة">
+    <meta name="twitter:image" content="public/images/288-flashlight-main-image.jpg">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
@@ -479,6 +510,29 @@
             return orderData;
         }
 
+        // Track initial page view for confirmation page
+        function trackConfirmationPageView() {
+            if (typeof ttq !== 'undefined') {
+                const orderData = getOrderData();
+                const productPrice = orderData.price || '1700 جنيه';
+                const priceNumber = productPrice.replace(/[^\d]/g, '');
+                
+                ttq.track('ViewContent', {
+                    content_type: 'confirmation_page',
+                    content_id: 'police-288-confirmation',
+                    content_name: 'صفحة تأكيد الطلب - منتج الصاعق والكشاف والليزر 3 في 1',
+                    value: priceNumber,
+                    currency: 'EGP',
+                    page_type: 'order_confirmation'
+                });
+                
+                console.log('📊 TikTok Confirmation Page View Tracked');
+            }
+        }
+        
+        // Initialize confirmation page tracking immediately
+        setTimeout(trackConfirmationPageView, 500);
+
         // Calculate total price including shipping
         function calculateTotal(productPrice) {
             const price = parseInt(productPrice.replace(/[^\d]/g, ''));
@@ -518,9 +572,64 @@
             document.getElementById('totalPrice').textContent = calculateTotal(productPrice);
         }
 
+        // TikTok Purchase Tracking - تتبع عمليات الشراء
+        function trackTikTokPurchase(orderData) {
+            if (typeof ttq !== 'undefined') {
+                // استخراج القيمة الرقمية للسعر
+                const productPrice = orderData.price || '1700 جنيه';
+                const priceNumber = productPrice.replace(/[^\d]/g, '');
+                const totalWithShipping = parseInt(priceNumber) + 45; // إضافة رسوم الشحن
+                
+                // حدث الشراء المكتمل
+                ttq.track('CompletePayment', {
+                    value: totalWithShipping.toString(),
+                    currency: 'EGP',
+                    content_type: 'product',
+                    content_id: 'police-288-3in1-confirmation',
+                    content_name: 'منتج الصاعق والكشاف والليزر 3 في 1',
+                    quantity: parseInt(orderData.quantity) || 1,
+                    description: 'تأكيد طلب منتج الصاعق والكشاف والليزر 3 في 1'
+                });
+                
+                // حدث الشراء العام
+                ttq.track('Purchase', {
+                    value: totalWithShipping.toString(),
+                    currency: 'EGP',
+                    content_type: 'product',
+                    content_id: 'police-288-3in1',
+                    content_name: 'منتج الصاعق والكشاف والليزر 3 في 1',
+                    quantity: parseInt(orderData.quantity) || 1,
+                    order_id: document.getElementById('orderIdNumber').textContent
+                });
+                
+                // حدث تحويل مخصص للحملات
+                ttq.track('SubmitForm', {
+                    content_name: 'تأكيد الطلب - منتج الصاعق والكشاف والليزر 3 في 1',
+                    content_category: 'أدوات الحماية الشخصية',
+                    value: totalWithShipping.toString(),
+                    currency: 'EGP',
+                    form_type: 'order_confirmation'
+                });
+                
+                console.log('✅ TikTok Purchase Events Tracked:', {
+                    total_value: totalWithShipping,
+                    product_quantity: orderData.quantity,
+                    order_id: document.getElementById('orderIdNumber').textContent
+                });
+            } else {
+                console.warn('⚠️ TikTok Pixel not loaded - Purchase tracking skipped');
+            }
+        }
+
         // Initialize page
         document.addEventListener('DOMContentLoaded', function() {
             populateOrderDetails();
+            
+            // Track TikTok Purchase Events بعد تحميل البيانات
+            setTimeout(() => {
+                const orderData = getOrderData();
+                trackTikTokPurchase(orderData);
+            }, 1000);
             
             // Add some animation delays
             setTimeout(() => {

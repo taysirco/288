@@ -52,18 +52,40 @@ img[loading="lazy"].loaded {
 }
 
 /* Optimize thumbnail images */
-.thumbnail-item img {
-    width: 100%;
-    height: 120px;
-    object-fit: cover;
-    border-radius: 8px;
-    transition: transform 0.2s ease;
+.thumbnail-item {
+    background: white;
+    border-radius: 4px;
+    padding: 2px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 2px solid transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    position: relative;
+    overflow: hidden;
 }
 
 .thumbnail-item:hover {
-    transform: translateY(-5px);
+    transform: translateY(-2px);
     border-color: #667eea;
-    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+}
+
+.thumbnail-item.active {
+    border-color: #667eea;
+    box-shadow: 0 3px 12px rgba(102, 126, 234, 0.25);
+}
+
+.thumbnail-item img {
+    width: 100%;
+    height: 35px;
+    object-fit: contain;
+    border-radius: 2px;
+    transition: transform 0.2s ease;
+    background: #f8fafc;
 }
 
 .thumbnail-item:hover img {
@@ -686,16 +708,19 @@ header.transparent {
 }
 
 .thumbnail-item {
-    background: white;
-    border-radius: 4px;
-    padding: 2px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    transition: all 0.3s ease;
-    cursor: pointer;
-    border: 2px solid transparent;
-    aspect-ratio: 1/1;
-    position: relative;
-    overflow: hidden;
+    padding: 1px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 32px;
+}
+
+.thumbnail-item img { 
+    height: 30px;
+    border-radius: 2px;
+    object-fit: contain;
+    background: #f8fafc;
 }
 
 .thumbnail-item:hover {
@@ -707,19 +732,6 @@ header.transparent {
 .thumbnail-item.active {
     border-color: #667eea;
     box-shadow: 0 3px 12px rgba(102, 126, 234, 0.25);
-}
-
-.thumbnail-item img {
-    width: 100%;
-    height: 35px;
-    object-fit: contain;
-    border-radius: 2px;
-    transition: transform 0.2s ease;
-    background: #f8fafc;
-}
-
-.thumbnail-item:hover img {
-    transform: scale(1.05);
 }
 
 /* Reviews - Simplified */
@@ -1171,7 +1183,10 @@ footer a:hover {
     .thumbnail-item {
         padding: 1px;
         border-radius: 3px;
-        aspect-ratio: 1/1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 32px;
     }
     
     .thumbnail-item img { 
@@ -1298,12 +1313,15 @@ footer a:hover {
     
     .thumbnail-item {
         padding: 1px;
-        aspect-ratio: 1/1;
         border-radius: 3px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 32px;
     }
     
-    .thumbnail-item img {
-        height: 25px;
+    .thumbnail-item img { 
+        height: 30px;
         border-radius: 2px;
         object-fit: contain;
         background: #f8fafc;

@@ -164,11 +164,176 @@ function setupNumberConversion() {
 // Initialize image optimizer
 const imageOptimizer = new ImageOptimizer();
 
-// إعدادات السلايدر
+// إعدادات السلايدر مع دعم اللمس
 let currentMainSlide = 0;
 let mainSlides = [];
 let totalMainSlides = 0;
 let mainAutoPlayInterval;
+let touchStartX = 0;
+let touchEndX = 0;
+let touchStartY = 0;
+let touchEndY = 0;
+let isDragging = false;
+let isScrolling = false;
+
+// Touch and swipe handling for mobile
+function initializeTouchSupport() {
+    const slider = document.querySelector('.main-slider');
+    const wrapper = document.getElementById('mainSliderWrapper');
+    
+    if (!slider || !wrapper) return;
+    
+    // Touch events
+    slider.addEventListener('touchstart', handleTouchStart, { passive: false });
+    slider.addEventListener('touchmove', handleTouchMove, { passive: false });
+    slider.addEventListener('touchend', handleTouchEnd, { passive: false });
+    
+    // Mouse events for desktop testing
+    slider.addEventListener('mousedown', handleMouseDown);
+    slider.addEventListener('mousemove', handleMouseMove);
+    slider.addEventListener('mouseup', handleMouseUp);
+    slider.addEventListener('mouseleave', handleMouseUp);
+}
+
+function handleTouchStart(e) {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+    isDragging = true;
+    isScrolling = false;
+    pauseMainAutoPlay();
+}
+
+function handleTouchMove(e) {
+    if (!isDragging) return;
+    
+    const touchX = e.touches[0].clientX;
+    const touchY = e.touches[0].clientY;
+    const deltaX = touchX - touchStartX;
+    const deltaY = touchY - touchStartY;
+    
+    // Determine if user is scrolling vertically or swiping horizontally
+    if (Math.abs(deltaY) > Math.abs(deltaX) && !isScrolling) {
+        // Vertical scroll - don't interfere
+        isDragging = false;
+        return;
+    }
+    
+    if (Math.abs(deltaX) > 10) {
+        e.preventDefault(); // Prevent vertical scrolling when swiping horizontally
+        isScrolling = false;
+    }
+}
+
+function handleTouchEnd(e) {
+    if (!isDragging) return;
+    
+    touchEndX = e.changedTouches[0].clientX;
+    touchEndY = e.changedTouches[0].clientY;
+    
+    const deltaX = touchEndX - touchStartX;
+    const deltaY = touchEndY - touchStartY;
+    
+    // Check if it's a horizontal swipe (more horizontal than vertical)
+    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
+        if (deltaX > 0) {
+            // Swipe right - previous slide
+            changeMainSlide(-1);
+        } else {
+            // Swipe left - next slide
+            changeMainSlide(1);
+        }
+    }
+    
+    isDragging = false;
+    resetMainAutoPlay();
+}
+
+// Mouse events for desktop
+function handleMouseDown(e) {
+    touchStartX = e.clientX;
+    touchStartY = e.clientY;
+    isDragging = true;
+    pauseMainAutoPlay();
+    e.preventDefault();
+}
+
+function handleMouseMove(e) {
+    if (!isDragging) return;
+    
+    const deltaX = e.clientX - touchStartX;
+    const deltaY = e.clientY - touchStartY;
+    
+    if (Math.abs(deltaX) > 10) {
+        e.preventDefault();
+    }
+}
+
+function handleMouseUp(e) {
+    if (!isDragging) return;
+    
+    touchEndX = e.clientX;
+    touchEndY = e.clientY;
+    
+    const deltaX = touchEndX - touchStartX;
+    const deltaY = touchEndY - touchStartY;
+    
+    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
+        if (deltaX > 0) {
+            changeMainSlide(-1);
+        } else {
+            changeMainSlide(1);
+        }
+    }
+    
+    isDragging = false;
+    resetMainAutoPlay();
+}
+
+// Enhanced thumbnail click handling
+function initializeThumbnailNavigation() {
+    const thumbnails = document.querySelectorAll('.thumbnail-item');
+    
+    thumbnails.forEach((thumbnail, index) => {
+        thumbnail.addEventListener('click', () => {
+            // Remove active class from all thumbnails
+            thumbnails.forEach(t => t.classList.remove('active'));
+            
+            // Add active class to clicked thumbnail
+            thumbnail.classList.add('active');
+            
+            // Go to corresponding slide
+            goToSlide(index);
+            
+            // Track interaction
+            if (typeof ttq !== 'undefined') {
+                ttq.track('ClickButton', {
+                    content_type: 'gallery_navigation',
+                    content_name: `Thumbnail ${index + 1}`,
+                });
+            }
+        });
+    });
+}
+
+// Mobile-optimized autoplay
+function startMainAutoPlay() {
+    // Shorter autoplay on mobile for better UX
+    const isMobile = window.innerWidth <= 768;
+    const interval = isMobile ? 4000 : 5000; // 4s on mobile, 5s on desktop
+    
+    mainAutoPlayInterval = setInterval(() => {
+        currentMainSlide = (currentMainSlide + 1) % totalMainSlides;
+        showMainSlide(currentMainSlide);
+        updateThumbnailActive(currentMainSlide);
+    }, interval);
+}
+
+function updateThumbnailActive(activeIndex) {
+    const thumbnails = document.querySelectorAll('.thumbnail-item');
+    thumbnails.forEach((thumbnail, index) => {
+        thumbnail.classList.toggle('active', index === activeIndex);
+    });
+}
 
 // Social Proof Notifications System - نظام إشعارات الثقة الاجتماعية
 class SocialProofNotifications {
@@ -422,6 +587,8 @@ let socialProofSystem;
 // تهيئة التطبيق
 document.addEventListener('DOMContentLoaded', function() {
     initializeMainSlider();
+    initializeTouchSupport();
+    initializeThumbnailNavigation();
     initializeForm();
     initializeModal();
     initializeFloatingNav();
@@ -445,6 +612,15 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     startMainAutoPlay();
+    
+    // Additional mobile optimizations
+    if (window.innerWidth <= 768) {
+        // Optimize images for mobile
+        optimizeImagesForMobile();
+        
+        // Add touch feedback
+        addTouchFeedback();
+    }
 });
 
 // السلايدر الرئيسي
@@ -496,19 +672,6 @@ function updateIndicators(activeIndex) {
     indicators.forEach((indicator, index) => {
         indicator.classList.toggle('active', index === activeIndex);
     });
-}
-
-function startMainAutoPlay() {
-    if (totalMainSlides <= 1) return;
-    
-    mainAutoPlayInterval = setInterval(() => {
-        changeMainSlide(1);
-    }, 4000);
-}
-
-function resetMainAutoPlay() {
-    clearInterval(mainAutoPlayInterval);
-    startMainAutoPlay();
 }
 
 function pauseMainAutoPlay() {
@@ -1039,4 +1202,50 @@ function initializeDemoVideo() {
             }
         });
     }
+}
+
+// Mobile image optimization
+function optimizeImagesForMobile() {
+    const reviewImages = document.querySelectorAll('.review-image img');
+    
+    reviewImages.forEach(img => {
+        // Add loading="lazy" if not present
+        if (!img.hasAttribute('loading')) {
+            img.setAttribute('loading', 'lazy');
+        }
+        
+        // Add decoding="async" for better performance
+        img.setAttribute('decoding', 'async');
+        
+        // Optimize dimensions for 1080x1080 mobile screens
+        img.style.maxWidth = '100%';
+        img.style.height = 'auto';
+    });
+}
+
+// Add touch feedback for better UX
+function addTouchFeedback() {
+    const interactiveElements = document.querySelectorAll('.thumbnail-item, .review-image, .slide-indicators .indicator');
+    
+    interactiveElements.forEach(element => {
+        element.addEventListener('touchstart', function() {
+            this.style.transform = 'scale(0.95)';
+            this.style.transition = 'transform 0.1s ease';
+        });
+        
+        element.addEventListener('touchend', function() {
+            this.style.transform = '';
+            this.style.transition = 'transform 0.3s ease';
+        });
+        
+        element.addEventListener('touchcancel', function() {
+            this.style.transform = '';
+            this.style.transition = 'transform 0.3s ease';
+        });
+    });
+}
+
+function resetMainAutoPlay() {
+    clearInterval(mainAutoPlayInterval);
+    startMainAutoPlay();
 } 

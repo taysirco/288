@@ -182,7 +182,7 @@ header.transparent {
 .hero {
     margin-top: 85px; /* Increased for mobile compatibility */
     padding: 25px 0;
-    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    background: transparent;
     position: relative;
 }
 

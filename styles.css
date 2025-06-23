@@ -99,7 +99,7 @@ body {
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 15px;
+    padding: 0 3px;
 }
 
 /* Header */
@@ -467,7 +467,7 @@ header.transparent {
 .thumbnail-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 15px;
+    gap: 3px;
     max-width: 800px;
     margin: 0 auto;
     padding: 0 10px;
@@ -625,7 +625,7 @@ header.transparent {
 .reviews-gallery {
     margin-top: 60px;
     text-align: center;
-    padding: 0 15px;
+    padding: 0 3px;
 }
 
 .reviews-gallery h3 {
@@ -830,7 +830,7 @@ footer a:hover {
 
 /* Responsive Design - Optimized */
 @media (max-width: 768px) {
-    .container { padding: 0 15px; }
+    .container { padding: 0 3px; }
     
     header h1 { font-size: 1.2rem; }
     
@@ -868,7 +868,7 @@ footer a:hover {
     
     .features {
         grid-template-columns: 1fr;
-        gap: 15px;
+        gap: 3px;
     }
     
     .feature { padding: 20px 15px; }
@@ -883,7 +883,7 @@ footer a:hover {
     .gallery h2 {
         font-size: 1.8rem;
         margin-bottom: 30px;
-        padding: 0 15px;
+        padding: 0 3px;
     }
     
     .main-slider {
@@ -912,7 +912,7 @@ footer a:hover {
     .slide-indicators {
         gap: 10px;
         margin-top: 20px;
-        padding: 0 15px;
+        padding: 0 3px;
     }
     
     .indicator {
@@ -931,7 +931,7 @@ footer a:hover {
     .thumbnail-grid {
         grid-template-columns: repeat(3, 1fr);
         gap: 12px;
-        padding: 0 15px;
+        padding: 0 3px;
         max-width: 100%;
     }
     
@@ -950,16 +950,21 @@ footer a:hover {
     
     .reviews-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 15px;
-        padding: 0 15px;
+        gap: 3px;
+        padding: 0 3px;
     }
     
     .review-image {
         aspect-ratio: 1/1;
-    }
+        padding: 0;
+        border-radius: 3px;
+        overflow: hidden;
+        background: transparent;
+        border: none;
+        box-shadow: none;    }
     
     .review-image img { 
-        height: 160px; 
+        width: 100%; height: 100%; object-fit: cover; border-radius: 3px; display: block; 
     }
     
     .form-container {
@@ -1039,7 +1044,7 @@ footer a:hover {
     
     .reviews-grid { grid-template-columns: 1fr; }
     
-    .reviews-stats { flex-direction: column; gap: 15px; }
+    .reviews-stats { flex-direction: column; gap: 3px; }
 }
 
 /* Social Proof Notifications - إشعارات الثقة الاجتماعية */

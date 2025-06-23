@@ -157,7 +157,7 @@ header.transparent {
     display: flex;
     align-items: center;
     gap: 8px;
-    min-width: 50px;
+    min-width: 110px;
     overflow: hidden;
     white-space: nowrap;
 }
@@ -165,7 +165,6 @@ header.transparent {
 .floating-nav-item:hover {
     transform: scale(1.05);
     box-shadow: 0 6px 20px rgba(245, 87, 108, 0.4);
-    min-width: 110px;
 }
 
 .nav-icon {
@@ -177,7 +176,7 @@ header.transparent {
 .nav-text {
     font-weight: 600;
     font-size: 0.8rem;
-    opacity: 0;
+    opacity: 1;
     transition: opacity 0.2s ease;
 }
 
@@ -1082,11 +1081,11 @@ footer a:hover {
     
     .floating-nav-item {
         padding: 12px;
-        min-width: 50px;
+        min-width: 110px;
     }
     
     .floating-nav-item:hover {
-        min-width: 110px;
+        transform: scale(1.05);
     }
     
     .product-title { font-size: 1.7rem; }
@@ -1242,11 +1241,11 @@ footer a:hover {
     
     .floating-nav-item { 
         padding: 10px;
-        min-width: 40px;
+        min-width: 100px;
     }
     
     .floating-nav-item:hover {
-        min-width: 100px;
+        transform: scale(1.05);
     }
     
     .nav-icon {

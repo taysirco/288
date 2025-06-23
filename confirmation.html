@@ -18,6 +18,11 @@
     </script>
     <!-- TikTok Pixel Code End -->
     
+    <!-- Cache Control Meta Tags -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    
     <!-- Meta Tags for Social Sharing -->
     <meta name="description" content="تم تأكيد طلبك بنجاح! شكراً لاختيارك منتج الصاعق والكشاف والليزر 3 في 1 - أقوى منتج حماية في مصر">
     <meta name="keywords" content="تأكيد طلب, صاعق, كشاف, ليزر, حماية, دفاع, مصر, طلب ناجح">
@@ -651,6 +656,45 @@
         
         // Call update function after page loads
         setTimeout(updateContactLinks, 1000);
+        
+        // Cache Management for Confirmation Page
+        const confirmationVersion = '2.1.0';
+        const cacheTimestamp = Date.now();
+        
+        // Clear browser cache if needed
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                for(let registration of registrations) {
+                    registration.unregister();
+                }
+            });
+        }
+        
+        // Cache clear functionality
+        if (window.location.search.includes('clearCache=true')) {
+            console.log('🗑️ تنظيف كاش صفحة التأكيد...');
+            
+            localStorage.clear();
+            sessionStorage.clear();
+            
+            if ('caches' in window) {
+                caches.keys().then(function(names) {
+                    for (let name of names) {
+                        caches.delete(name);
+                    }
+                });
+            }
+            
+            const url = new URL(window.location);
+            url.searchParams.delete('clearCache');
+            window.history.replaceState({}, document.title, url.toString());
+            
+            console.log('✅ تم تنظيف كاش صفحة التأكيد بنجاح');
+        }
+        
+        // Version info
+        console.log(`🎉 Confirmation Page v${confirmationVersion}`);
+        console.log('📱 Cache timestamp:', new Date(cacheTimestamp).toLocaleString('ar-EG'));
     </script>
 </body>
 </html> 

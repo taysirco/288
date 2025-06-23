@@ -30,11 +30,16 @@
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔦</text></svg>">
     
-    <!-- Styles -->
-    <link rel="stylesheet" href="styles.css">
+    <!-- Stylesheets with Cache Busting -->
+    <link rel="stylesheet" href="styles.css?v=2.1.0&t=1734705600">
     
     <!-- Preload important resources -->
     <link rel="preload" href="public/images/288-flashlight-main-image.jpg" as="image">
+    
+    <!-- Cache Control Meta Tags -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
 </head>
 <body>
     <!-- Loading Spinner -->
@@ -599,16 +604,23 @@
         </div>
     </footer>
     
-    <!-- Scripts -->
-    <script src="script.js"></script>
+    <!-- Scripts with Cache Busting -->
+    <script src="script.js?v=2.1.0&t=1734705600"></script>
     
-    <!-- Performance optimization -->
+    <!-- Performance optimization with cache clearing -->
     <script>
-        // تحسين تحميل الصور
+        // Cache busting for dynamic assets
+        const currentVersion = '2.1.0';
+        const cacheTimestamp = Date.now();
+        
+        // تحسين تحميل الصور مع cache busting
         if ('loading' in HTMLImageElement.prototype) {
             const images = document.querySelectorAll('img[loading="lazy"]');
             images.forEach(img => {
-                img.src = img.src;
+                const originalSrc = img.src;
+                if (originalSrc && !originalSrc.includes('?v=')) {
+                    img.src = `${originalSrc}?v=${currentVersion}&t=${cacheTimestamp}`;
+                }
             });
         } else {
             // Fallback للمتصفحات القديمة
@@ -616,6 +628,45 @@
             script.src = 'https://polyfill.io/v3/polyfill.min.js?features=IntersectionObserver';
             document.head.appendChild(script);
         }
+        
+        // Clear browser cache programmatically
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                for(let registration of registrations) {
+                    registration.unregister();
+                }
+            });
+        }
+        
+        // Force reload if needed
+        if (window.location.search.includes('clearCache=true')) {
+            console.log('🗑️ تنظيف الكاش المطلوب...');
+            
+            // Clear localStorage
+            localStorage.clear();
+            sessionStorage.clear();
+            
+            // Clear cache if supported
+            if ('caches' in window) {
+                caches.keys().then(function(names) {
+                    for (let name of names) {
+                        caches.delete(name);
+                    }
+                });
+            }
+            
+            // Remove clearCache parameter and reload
+            const url = new URL(window.location);
+            url.searchParams.delete('clearCache');
+            window.history.replaceState({}, document.title, url.toString());
+            
+            console.log('✅ تم تنظيف الكاش بنجاح');
+        }
+        
+        // Add version info to console
+        console.log(`🚀 Police 288 Website v${currentVersion}`);
+        console.log('📱 Cache timestamp:', new Date(cacheTimestamp).toLocaleString('ar-EG'));
+        console.log('🔄 For cache clear, add ?clearCache=true to URL');
     </script>
 </body>
 </html> 

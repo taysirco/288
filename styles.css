@@ -812,31 +812,67 @@ header.transparent {
 }
 
 .reviews-stats {
-    flex-direction: row;
-    gap: 10px;
+    display: flex;
     justify-content: space-between;
-    margin-bottom: 25px;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 35px;
+    padding: 20px 15px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.04) 100%);
+    border-radius: 18px;
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 
+        0 8px 25px rgba(0, 0, 0, 0.12),
+        0 3px 12px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
     flex-wrap: nowrap;
-    padding: 12px 8px;
-    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+}
+
+.reviews-stats::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.04) 0%, rgba(118, 75, 162, 0.04) 100%);
+    opacity: 0.6;
+    pointer-events: none;
 }
 
 .stat-item {
     flex: 1;
     min-width: 0;
-    padding: 6px 2px;
+    text-align: center;
+    padding: 12px 8px;
+    position: relative;
+    z-index: 2;
 }
 
 .stat-number { 
-    font-size: 1.4rem;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #ffd700;
+    display: block;
     line-height: 1.1;
-    margin-bottom: 3px;
+    margin-bottom: 5px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+    background: linear-gradient(135deg, #ffd700 0%, #ffed4a 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .stat-label {
-    font-size: 0.7rem;
-    line-height: 1.1;
-    margin-top: 2px;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.85);
+    margin-top: 4px;
+    line-height: 1.2;
+    font-weight: 500;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
 }
 
 .review-grid {
@@ -1723,32 +1759,75 @@ footer a:hover {
 }
 
 /* ============================================= */
-/* OTHER MOBILE STYLES */
+/* REVIEWS STATS SECTION - MOBILE OPTIMIZED */
 /* ============================================= */
 .reviews-stats {
-    flex-direction: row;
-    gap: 10px;
-    justify-content: space-between;
-    margin-bottom: 25px;
-    flex-wrap: nowrap;
-    padding: 12px 8px;
-    border-radius: 12px;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    gap: 8px !important;
+    margin-bottom: 25px !important;
+    padding: 15px 10px !important;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%) !important;
+    border-radius: 15px !important;
+    backdrop-filter: blur(10px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.06) !important;
+    box-shadow: 
+        0 6px 20px rgba(0, 0, 0, 0.1) !important,
+        0 2px 8px rgba(0, 0, 0, 0.06) !important,
+        inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+    flex-wrap: nowrap !important;
+    position: relative !important;
+    overflow: hidden !important;
+    width: 100% !important;
+    max-width: 100% !important;
+}
+    
+.reviews-stats::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.03) 0%, rgba(118, 75, 162, 0.03) 100%);
+    opacity: 0.5;
+    pointer-events: none;
 }
     
 .stat-item {
-    flex: 1;
-    min-width: 0;
-    padding: 6px 2px;
+    flex: 1 !important;
+    min-width: 0 !important;
+    text-align: center !important;
+    padding: 8px 4px !important;
+    position: relative !important;
+    z-index: 2 !important;
 }
     
 .stat-number { 
-    font-size: 1.4rem;
-    line-height: 1.1;
-    margin-bottom: 3px;
+    font-size: 1.6rem !important;
+    font-weight: 700 !important;
+    color: #ffd700 !important;
+    display: block !important;
+    line-height: 1.1 !important;
+    margin-bottom: 4px !important;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4) !important;
+    background: linear-gradient(135deg, #ffd700 0%, #ffed4a 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
 }
     
 .stat-label {
-    font-size: 0.7rem;
-    line-height: 1.1;
-    margin-top: 2px;
+    font-size: 0.75rem !important;
+    color: rgba(255, 255, 255, 0.8) !important;
+    margin-top: 2px !important;
+    line-height: 1.1 !important;
+    font-weight: 500 !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4) !important;
+    word-wrap: break-word !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
 }

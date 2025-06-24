@@ -1,0 +1,194 @@
+/* Mobile Reviews Optimization - مخصص للموبايل */
+
+/* تحسينات صور التقييمات للتابلت - 768px */
+@media screen and (max-width: 768px) {
+    .reviews-gallery {
+        margin-top: 40px !important;
+        padding: 0 20px !important;
+        display: block !important;
+        visibility: visible !important;
+    }
+    
+    .reviews-gallery h3 {
+        font-size: 1.8rem !important;
+        margin-bottom: 15px !important;
+        color: white !important;
+        text-align: center !important;
+    }
+    
+    .gallery-subtitle {
+        font-size: 1.1rem !important;
+        color: #a0aec0 !important;
+        margin-bottom: 30px !important;
+        text-align: center !important;
+    }
+    
+    .reviews-gallery .reviews-grid {
+        display: grid !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 20px !important;
+        padding: 0 !important;
+        max-width: 100% !important;
+        margin: 0 auto !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    
+    .review-image {
+        width: 100% !important;
+        aspect-ratio: 1/1 !important;
+        background: rgba(255, 255, 255, 0.08) !important;
+        border: 2px solid rgba(255, 255, 255, 0.1) !important;
+        border-radius: 15px !important;
+        overflow: hidden !important;
+        padding: 10px !important;
+        transition: all 0.3s ease !important;
+        cursor: pointer !important;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        position: relative !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    
+    .review-image:hover {
+        transform: scale(1.02) !important;
+        border-color: rgba(102, 126, 234, 0.3) !important;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25) !important;
+    }
+    
+    .review-image img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        border-radius: 12px !important;
+        filter: contrast(1.05) saturate(1.1) !important;
+        transition: all 0.3s ease !important;
+        background: #f8fafc !important;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    
+    .review-image:hover img {
+        filter: contrast(1.1) saturate(1.2) brightness(1.05) !important;
+        transform: scale(1.01) !important;
+    }
+}
+
+/* تحسينات صور التقييمات للهواتف الصغيرة - 480px */
+@media screen and (max-width: 480px) {
+    .reviews-gallery {
+        margin-top: 40px !important;
+        padding: 0 15px !important;
+        display: block !important;
+        visibility: visible !important;
+    }
+    
+    .reviews-gallery h3 {
+        font-size: 1.6rem !important;
+        margin-bottom: 12px !important;
+        color: white !important;
+        text-align: center !important;
+    }
+    
+    .gallery-subtitle {
+        font-size: 1rem !important;
+        color: #a0aec0 !important;
+        margin-bottom: 25px !important;
+        text-align: center !important;
+    }
+    
+    .reviews-gallery .reviews-grid {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 15px !important;
+        padding: 0 !important;
+        max-width: 100% !important;
+        margin: 0 auto !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    
+    .review-image {
+        width: 100% !important;
+        aspect-ratio: 1/1 !important;
+        background: rgba(255, 255, 255, 0.08) !important;
+        border: 2px solid rgba(255, 255, 255, 0.1) !important;
+        border-radius: 15px !important;
+        overflow: hidden !important;
+        padding: 8px !important;
+        transition: all 0.3s ease !important;
+        cursor: pointer !important;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        position: relative !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    
+    .review-image:hover {
+        transform: scale(1.02) !important;
+        border-color: rgba(102, 126, 234, 0.3) !important;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25) !important;
+    }
+    
+    .review-image img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        border-radius: 12px !important;
+        filter: contrast(1.05) saturate(1.1) !important;
+        transition: all 0.3s ease !important;
+        background: #f8fafc !important;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    
+    .review-image:hover img {
+        filter: contrast(1.1) saturate(1.2) brightness(1.05) !important;
+        transform: scale(1.01) !important;
+    }
+    
+    /* إضافة تأثير loading للصور */
+    .review-image::before {
+        content: '📷';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 2rem;
+        color: rgba(255, 255, 255, 0.3);
+        z-index: 1;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    .review-image img[loading="lazy"]:not(.loaded)::before {
+        opacity: 1;
+    }
+}
+
+/* إصلاح عام للتأكد من ظهور الصور */
+.reviews-gallery .reviews-grid {
+    display: grid !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.review-image {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.review-image img {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+} 

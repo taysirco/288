@@ -621,6 +621,82 @@ document.addEventListener('DOMContentLoaded', function() {
         // Add touch feedback
         addTouchFeedback();
     }
+
+    // Mobile Reviews Images Fix - تحسين صور التقييمات للموبايل
+    const reviewsGallery = document.querySelector('.reviews-gallery');
+    const reviewsGrid = document.querySelector('.reviews-gallery .reviews-grid');
+    const reviewImages = document.querySelectorAll('.review-image');
+    
+    if (reviewsGallery && reviewsGrid && reviewImages.length > 0) {
+        console.log('✅ تم العثور على صور التقييمات:', reviewImages.length);
+        
+        // التأكد من إعدادات العرض الصحيحة
+        reviewsGallery.style.display = 'block';
+        reviewsGallery.style.visibility = 'visible';
+        reviewsGallery.style.opacity = '1';
+        
+        reviewsGrid.style.display = 'grid';
+        reviewsGrid.style.visibility = 'visible';
+        reviewsGrid.style.opacity = '1';
+        
+        // إعدادات الموبايل
+        if (window.innerWidth <= 480) {
+            reviewsGrid.style.gridTemplateColumns = 'repeat(2, 1fr)';
+            reviewsGrid.style.gap = '15px';
+        } else if (window.innerWidth <= 768) {
+            reviewsGrid.style.gridTemplateColumns = 'repeat(3, 1fr)';
+            reviewsGrid.style.gap = '20px';
+        }
+        
+        // التأكد من ظهور كل صورة
+        reviewImages.forEach((image, index) => {
+            image.style.display = 'flex';
+            image.style.visibility = 'visible';
+            image.style.opacity = '1';
+            
+            const img = image.querySelector('img');
+            if (img) {
+                img.style.display = 'block';
+                img.style.visibility = 'visible';
+                img.style.opacity = '1';
+                
+                // إضافة event listener للتحقق من تحميل الصورة
+                img.addEventListener('load', function() {
+                    console.log(`✅ تم تحميل صورة التقييم ${index + 1}`);
+                    img.classList.add('loaded');
+                });
+                
+                img.addEventListener('error', function() {
+                    console.error(`❌ فشل تحميل صورة التقييم ${index + 1}:`, img.src);
+                });
+            }
+        });
+        
+        // تشخيص إضافي للموبايل
+        if (window.innerWidth <= 768) {
+            console.log('📱 وضع الموبايل نشط - عرض الشاشة:', window.innerWidth);
+            console.log('🖼️ عدد صور التقييمات الظاهرة:', reviewImages.length);
+        }
+    } else {
+        console.error('❌ لم يتم العثور على قسم صور التقييمات');
+    }
+});
+
+// مراقبة تغيير حجم الشاشة لإعادة تطبيق الإعدادات
+window.addEventListener('resize', function() {
+    const reviewsGrid = document.querySelector('.reviews-gallery .reviews-grid');
+    if (reviewsGrid) {
+        if (window.innerWidth <= 480) {
+            reviewsGrid.style.gridTemplateColumns = 'repeat(2, 1fr)';
+            reviewsGrid.style.gap = '15px';
+        } else if (window.innerWidth <= 768) {
+            reviewsGrid.style.gridTemplateColumns = 'repeat(3, 1fr)';
+            reviewsGrid.style.gap = '20px';
+        } else {
+            reviewsGrid.style.gridTemplateColumns = 'repeat(auto-fit, minmax(280px, 1fr))';
+            reviewsGrid.style.gap = '25px';
+        }
+    }
 });
 
 // السلايدر الرئيسي

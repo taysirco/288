@@ -818,6 +818,9 @@ document.addEventListener('DOMContentLoaded', function() {
     setupNumberConversion();
     initializeDemoVideo();
     
+    // Auto-play YouTube video
+    initializeAutoPlayVideo();
+    
     // تهيئة نظام إشعارات الثقة الاجتماعية
     socialProofSystem = new SocialProofNotifications();
     
@@ -1548,7 +1551,7 @@ function resetMainAutoPlay() {
     startMainAutoPlay();
 }
 
-// YouTube Lite Loading Function
+// YouTube Lite Loading Function with Auto-play
 function loadYouTubeVideo() {
     const youtubeLite = document.getElementById('youtube-lite');
     const youtubeIframe = document.getElementById('youtube-iframe');
@@ -1557,8 +1560,8 @@ function loadYouTubeVideo() {
         // Add loading state
         youtubeLite.classList.add('loading');
         
-        // Set iframe source
-        youtubeIframe.src = 'https://www.youtube.com/embed/3cAxo01FWuw?si=HC9sF_042MUE47SK&autoplay=1&mute=1&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&cc_load_policy=0&fs=0&disablekb=1&loop=1&playlist=3cAxo01FWuw&vq=hd720';
+        // Set iframe source with autoplay enabled
+        youtubeIframe.src = 'https://www.youtube.com/embed/3cAxo01FWuw?si=HC9sF_042MUE47SK&autoplay=1&mute=1&controls=1&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&cc_load_policy=0&loop=1&playlist=3cAxo01FWuw&vq=hd720';
         
         // Show iframe and hide lite version
         setTimeout(() => {
@@ -1578,4 +1581,13 @@ function loadYouTubeVideo() {
             }
         }, 500);
     }
+}
+
+// Auto-play YouTube video when page loads
+function initializeAutoPlayVideo() {
+    // Wait for 2 seconds after page load, then auto-play video
+    setTimeout(() => {
+        console.log('🎬 تشغيل تلقائي للفيديو...');
+        loadYouTubeVideo();
+    }, 2000);
 } 

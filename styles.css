@@ -187,6 +187,49 @@ img[loading="lazy"].loaded {
     display: none;
 }
 
+/* Auto-play text for YouTube */
+.youtube-auto-text {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    backdrop-filter: blur(10px);
+    animation: pulse 2s infinite;
+    z-index: 3;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 1; }
+}
+
+/* Hide auto-text when loading */
+.youtube-lite.loading .youtube-auto-text {
+    display: none;
+}
+
+/* Loading text for YouTube */
+.youtube-lite.loading::after {
+    content: '⏳ جاري تحميل الفيديو...';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    z-index: 4;
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
 
 * {
@@ -1069,6 +1112,8 @@ header.transparent {
     box-shadow: 0 6px 20px rgba(0,0,0,0.12);
     transition: all 0.4s ease;
     cursor: pointer;
+    position: relative !important;
+    z-index: 2 !important;
 }
 
 .review-image:hover {
@@ -1885,6 +1930,8 @@ footer a:hover {
     border-radius: 15px;
     overflow: hidden;
     box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    position: relative !important;
+    z-index: 2 !important;
 }
 
 .review-image:hover {

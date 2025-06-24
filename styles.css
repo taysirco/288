@@ -707,8 +707,8 @@ header.transparent {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 38px;
-    width: 38px;
+    height: 32px;
+    width: 32px;
 }
 
 .thumbnail-item img { 
@@ -1182,6 +1182,7 @@ footer a:hover {
         align-items: center;
         justify-content: center;
         height: 32px;
+        width: 32px;
     }
     
     .thumbnail-item img { 
@@ -1313,6 +1314,7 @@ footer a:hover {
         align-items: center;
         justify-content: center;
         height: 32px;
+        width: 32px;
     }
     
     .thumbnail-item img { 

@@ -602,7 +602,7 @@ header.transparent {
 /* Main Product Slider - Enhanced for 1080x1080 Square Format */
 .main-slider {
     position: relative;
-    max-width: 800px;
+    max-width: 1080px;
     margin: 0 auto 40px;
     overflow: hidden;
     border-radius: 20px;
@@ -622,7 +622,7 @@ header.transparent {
 
 .main-slide {
     min-width: 100%;
-    height: 800px;
+    height: 1080px;
     border-radius: 15px;
     overflow: hidden;
     background: #f8fafc;
@@ -702,7 +702,7 @@ header.transparent {
     grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
     gap: 20px;
     padding: 20px 10px;
-    max-width: 800px;
+    max-width: 1080px;
     margin: 0 auto;
     justify-items: center;
 }
@@ -1196,7 +1196,7 @@ footer a:hover {
     }
     
     .main-slide {
-        height: 360px;
+        height: 480px;
         border-radius: 12px;
         aspect-ratio: 1/1;
         scroll-snap-align: center;

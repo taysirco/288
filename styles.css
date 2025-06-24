@@ -103,6 +103,90 @@ img[loading="lazy"].loaded {
     image-rendering: -webkit-optimize-contrast;
 }
 
+/* YouTube Lite Optimization for Fast Loading */
+.youtube-lite {
+    position: relative;
+    cursor: pointer;
+    background: #000;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.2s ease;
+}
+
+.youtube-lite:hover {
+    transform: scale(1.02);
+}
+
+.youtube-thumbnail {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.youtube-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+    filter: brightness(0.8);
+    transition: filter 0.3s ease;
+}
+
+.youtube-lite:hover .youtube-thumbnail img {
+    filter: brightness(1);
+}
+
+.youtube-play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 68px;
+    height: 48px;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.youtube-lite:hover .youtube-play-button {
+    background: rgba(255, 0, 0, 0.9);
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+.youtube-play-button svg {
+    width: 68px;
+    height: 48px;
+    opacity: 0.9;
+    transition: opacity 0.3s ease;
+}
+
+.youtube-lite:hover .youtube-play-button svg {
+    opacity: 1;
+}
+
+/* Loading state for YouTube */
+.youtube-loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 1.2rem;
+    display: none;
+}
+
+.youtube-lite.loading .youtube-loading {
+    display: block;
+}
+
+.youtube-lite.loading .youtube-play-button {
+    display: none;
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
 
 * {

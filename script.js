@@ -1,3 +1,225 @@
+// Police 288 Performance Optimized JavaScript - v2.1.0
+// Performance Monitoring and Service Worker Integration
+
+// Critical Performance Metrics
+class PerformanceMonitor {
+    constructor() {
+        this.metrics = {};
+        this.init();
+    }
+
+    init() {
+        // Monitor Core Web Vitals
+        this.observePerformance();
+        this.monitorLCP();
+        this.monitorFID();
+        this.monitorCLS();
+        this.registerServiceWorker();
+    }
+
+    observePerformance() {
+        if ('PerformanceObserver' in window) {
+            // Monitor long tasks
+            new PerformanceObserver((list) => {
+                for (const entry of list.getEntries()) {
+                    if (entry.duration > 50) {
+                        console.warn(`⚠️ Long task detected: ${entry.duration.toFixed(2)}ms`);
+                    }
+                }
+            }).observe({ entryTypes: ['longtask'] });
+
+            // Monitor resource loading
+            new PerformanceObserver((list) => {
+                for (const entry of list.getEntries()) {
+                    if (entry.duration > 1000) {
+                        console.warn(`⚠️ Slow resource: ${entry.name} took ${entry.duration.toFixed(2)}ms`);
+                    }
+                }
+            }).observe({ entryTypes: ['resource'] });
+        }
+    }
+
+    monitorLCP() {
+        if ('PerformanceObserver' in window) {
+            new PerformanceObserver((list) => {
+                const entries = list.getEntries();
+                const lastEntry = entries[entries.length - 1];
+                this.metrics.lcp = lastEntry.startTime;
+                
+                if (lastEntry.startTime > 2500) {
+                    console.warn(`⚠️ Poor LCP: ${lastEntry.startTime.toFixed(2)}ms`);
+                } else {
+                    console.log(`✅ Good LCP: ${lastEntry.startTime.toFixed(2)}ms`);
+                }
+            }).observe({ entryTypes: ['largest-contentful-paint'] });
+        }
+    }
+
+    monitorFID() {
+        if ('PerformanceObserver' in window) {
+            new PerformanceObserver((list) => {
+                for (const entry of list.getEntries()) {
+                    this.metrics.fid = entry.processingStart - entry.startTime;
+                    
+                    if (entry.processingStart - entry.startTime > 100) {
+                        console.warn(`⚠️ Poor FID: ${(entry.processingStart - entry.startTime).toFixed(2)}ms`);
+                    } else {
+                        console.log(`✅ Good FID: ${(entry.processingStart - entry.startTime).toFixed(2)}ms`);
+                    }
+                }
+            }).observe({ entryTypes: ['first-input'] });
+        }
+    }
+
+    monitorCLS() {
+        let clsValue = 0;
+        if ('PerformanceObserver' in window) {
+            new PerformanceObserver((list) => {
+                for (const entry of list.getEntries()) {
+                    if (!entry.hadRecentInput) {
+                        clsValue += entry.value;
+                        this.metrics.cls = clsValue;
+                        
+                        if (clsValue > 0.1) {
+                            console.warn(`⚠️ Poor CLS: ${clsValue.toFixed(4)}`);
+                        }
+                    }
+                }
+            }).observe({ entryTypes: ['layout-shift'] });
+        }
+    }
+
+    async registerServiceWorker() {
+        if ('serviceWorker' in navigator) {
+            try {
+                const registration = await navigator.serviceWorker.register('/sw.js');
+                console.log('✅ Service Worker registered successfully:', registration.scope);
+                
+                // Handle updates
+                registration.addEventListener('updatefound', () => {
+                    const newWorker = registration.installing;
+                    newWorker.addEventListener('statechange', () => {
+                        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                            console.log('🔄 New Service Worker available');
+                            // Optionally show update notification
+                        }
+                    });
+                });
+                
+                // Listen for messages from SW
+                navigator.serviceWorker.addEventListener('message', (event) => {
+                    if (event.data && event.data.type === 'CACHE_UPDATED') {
+                        console.log('📦 Cache updated successfully');
+                    }
+                });
+                
+            } catch (error) {
+                console.error('❌ Service Worker registration failed:', error);
+            }
+        }
+    }
+
+    getMetrics() {
+        return this.metrics;
+    }
+}
+
+// Initialize Performance Monitor
+const performanceMonitor = new PerformanceMonitor();
+
+// Critical Resource Loading Optimization
+class ResourceOptimizer {
+    constructor() {
+        this.loadedResources = new Set();
+        this.criticalResources = [
+            'styles.css',
+            'mobile-reviews.css',
+            '288-flashlight-main-image.jpg'
+        ];
+        this.init();
+    }
+
+    init() {
+        this.preloadCriticalImages();
+        this.optimizeVideoLoading();
+        this.lazyLoadNonCritical();
+    }
+
+    preloadCriticalImages() {
+        const criticalImages = [
+            'public/images/288-flashlight-main-image.jpg',
+            'public/images/Electro Shocker Self-defense Electric Shock LED 288 Flashlight Police.jpg'
+        ];
+
+        criticalImages.forEach((src, index) => {
+            const img = new Image();
+            img.onload = () => {
+                this.loadedResources.add(src);
+                console.log(`✅ Critical image ${index + 1} preloaded`);
+            };
+            img.onerror = () => {
+                console.warn(`⚠️ Failed to preload: ${src}`);
+            };
+            img.src = src;
+        });
+    }
+
+    optimizeVideoLoading() {
+        const videos = document.querySelectorAll('video');
+        videos.forEach(video => {
+            // Set preload to metadata for better performance
+            video.preload = 'metadata';
+            
+            // Add intersection observer for video
+            if ('IntersectionObserver' in window) {
+                const videoObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            video.preload = 'auto';
+                            videoObserver.unobserve(video);
+                        }
+                    });
+                }, { threshold: 0.1 });
+                
+                videoObserver.observe(video);
+            }
+        });
+    }
+
+    lazyLoadNonCritical() {
+        // Lazy load review images
+        const reviewImages = document.querySelectorAll('.review-image img');
+        
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        if (img.dataset.src) {
+                            img.src = img.dataset.src;
+                            img.removeAttribute('data-src');
+                        }
+                        img.classList.add('loaded');
+                        imageObserver.unobserve(img);
+                    }
+                });
+            }, {
+                rootMargin: '50px 0px',
+                threshold: 0.1
+            });
+
+            reviewImages.forEach(img => {
+                if (img.loading === 'lazy') {
+                    imageObserver.observe(img);
+                }
+            });
+        }
+    }
+}
+
+// Initialize Resource Optimizer
+const resourceOptimizer = new ResourceOptimizer();
+
 // تحسين الأداء - إصدار محسن
 function debounce(func, wait) {
     let timeout;
@@ -1324,4 +1546,36 @@ function addTouchFeedback() {
 function resetMainAutoPlay() {
     clearInterval(mainAutoPlayInterval);
     startMainAutoPlay();
+}
+
+// YouTube Lite Loading Function
+function loadYouTubeVideo() {
+    const youtubeLite = document.getElementById('youtube-lite');
+    const youtubeIframe = document.getElementById('youtube-iframe');
+    
+    if (youtubeLite && youtubeIframe) {
+        // Add loading state
+        youtubeLite.classList.add('loading');
+        
+        // Set iframe source
+        youtubeIframe.src = 'https://www.youtube.com/embed/3cAxo01FWuw?si=HC9sF_042MUE47SK&autoplay=1&mute=1&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&cc_load_policy=0&fs=0&disablekb=1&loop=1&playlist=3cAxo01FWuw&vq=hd720';
+        
+        // Show iframe and hide lite version
+        setTimeout(() => {
+            youtubeLite.style.display = 'none';
+            youtubeIframe.style.display = 'block';
+            
+            // TikTok tracking for video play
+            if (typeof ttq !== 'undefined') {
+                ttq.track('ViewContent', {
+                    content_type: 'video',
+                    content_id: 'youtube-hero-video',
+                    content_name: 'عرض منتج الصاعق والكشاف والليزر 3 في 1',
+                    value: '1700',
+                    currency: 'EGP'
+                });
+                console.log('✅ TikTok Video Play tracked');
+            }
+        }, 500);
+    }
 } 
